@@ -2,3 +2,36 @@
 GET http://localhost:3333/prompts
 
 ### Separator
+
+# @name upload-videos
+POST http://localhost:3333/videos
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="file"; filename="example.mp3"
+Content-Type: audio/mpeg
+
+< ./example.mp3
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
+### Separator
+
+# @name create-transcription
+POST http://localhost:3333/videos/6a116e50-e2d5-4716-bd8a-1a56fe346221/transcription
+Content-Type: application/json
+
+{
+  "prompt": "clean architecture, ddd"
+}
+
+### Separator
+
+# @name generate-ai-completion
+POST http://localhost:3333/ai/complete
+Content-Type: application/json
+
+{
+  "videoId": "6a116e50-e2d5-4716-bd8a-1a56fe346221",
+  "temperature": 0.5,
+  "template": "Gere um resumo sucinto da transcrição do vídeo informada a seguir: '''{transcription}'''"
+}
